@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import Header from './products/Header'
-import Card from './products/Card'
+import { useState } from 'react';
+import Header from './Products/Header';
 
 
 function App() {
    return (
-    <div className=' h-screen'>
+    <div>
       <Header/>
     </div>
   )

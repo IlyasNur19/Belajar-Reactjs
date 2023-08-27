@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "./Card";
+import Blog from "../BlogPost/Blog";
 
 class Header extends Component {
   state = {
@@ -15,7 +16,7 @@ class Header extends Component {
     return (
 
       <div>
-      <div className="navbar bg-gray-800 w-screen">
+      <div className="navbar bg-gray-800 shadow-md">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">IlyasNPK</a>
         </div>
@@ -81,8 +82,7 @@ class Header extends Component {
           </div>
         </div>
       </div>
-
-      <Card onCounterChange={(value) => this.handleCounterChange(value)}/>
+      <Blog/>
       </div>
 
     )
