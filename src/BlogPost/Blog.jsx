@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import Post from './Post';
 import axios from 'axios';
+import Post2 from './Post2';
 
 export default class Blog extends Component {
   state = {
     post : []
   }
 
-  componentDidMount(){
-    // fetch('https://jsonplaceholder.typicode.com/posts')
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     this.setState({
-    //       post: json
-    //     })
-    //   })
-
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+  getPostApi = () =>{
+    axios.get('http://localhost:3000/posts')
       .then((res)=>{
         this.setState({
           post : res.data
@@ -24,12 +17,23 @@ export default class Blog extends Component {
       })
   }
 
+  handleDelete = (data) =>{
+    axios.delete(`http://localhost:3000/posts/${data}`)
+      .then((res) => {
+        this.getPostApi()
+      })
+  }
+
+  componentDidMount(){
+    this.getPostApi()
+  }
+
   render() {
     return (
-      <div className='flex flex-wrap justify-center p-3 '>
+      <div className='flex flex-wrap justify-center'>
         {
           this.state.post.map(post => {
-            return <Post key={post.id} title={post.title} desc={post.body}/>
+            return <Post key={post.id} data={post} delete={this.handleDelete}/>
           })
         }
       </div>
