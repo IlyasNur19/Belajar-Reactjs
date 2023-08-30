@@ -16,7 +16,7 @@ class Header extends Component {
     return (
 
       <div>
-      <div className="navbar bg-gray-800 shadow-md w-screen">
+      <div className="navbar bg-gray-800 shadow-md w-screen sticky top-0 z-10">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">IlyasNPK</a>
         </div>
