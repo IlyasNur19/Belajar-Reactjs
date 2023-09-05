@@ -7,6 +7,10 @@ const Alert = (props) => {
     setOpenModal(!openModal);
   };
 
+  const multiToggle = () =>{
+    props.tombolTambah();
+    toggleModal();
+  }
   return (
     <div className=" text-center">
       <button className=" m-2" onClick={toggleModal}>Tambah</button>
@@ -19,6 +23,7 @@ const Alert = (props) => {
             placeholder="Title"
             className=" text-center my-2 h-14 rounded-md"
             onChange={props.changeInput}
+            value={props.valueTitle}
           />
           <textarea
             name="body"
@@ -28,8 +33,9 @@ const Alert = (props) => {
             placeholder="Body"
             className=" p-3 rounded-md"
             onChange={props.changeInput}
+            value={props.valueBody}
           ></textarea>
-          <button className=" my-3 bg-blue-400" onClick={props.tombolTambah}>Tambah</button>
+          <button className=" my-3 bg-blue-400" onClick={()=> multiToggle()}>Tambah</button>
           <button className=" bg-red-400" onClick={toggleModal}>Kembali</button>
         </div>
       )}

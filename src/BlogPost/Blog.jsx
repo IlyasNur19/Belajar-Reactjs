@@ -11,7 +11,8 @@ export default class Blog extends Component {
       title : '',
       body : '',
       userId : 1
-    }
+    },
+    isUpdate: false
   }
 
   getPostApi = () =>{
@@ -28,6 +29,14 @@ export default class Blog extends Component {
     .then((ress) => {
       console.log(ress);
       this.getPostApi()
+      this.setState({
+        formBlog : {
+          id : 1,
+          title : '',
+          body : '',
+          userId : 1
+        }
+      })
     }, (err) => {
       console.log(err)
     })
@@ -39,19 +48,52 @@ export default class Blog extends Component {
         this.getPostApi()
       })
   }
+
+  putDataToAPI = () =>{
+    axios.put(`http://localhost:3000/posts/${this.state.formBlog.id}`, this.state.formBlog)
+    .then((res) => {
+      console.log(res);
+      this.getPostApi();
+      this.setState({
+        isUpdate : false,
+        formBlog : {
+          id : 1,
+          title : '',
+          body : '',
+          userId : 1
+        }
+
+      })
+    })
+  } 
+
   handleFormChange = (event) =>{
     let formBlogNew = {...this.state.formBlog}
     formBlogNew[event.target.name] = event.target.value
     let timeStamp = new Date().getTime()
-    formBlogNew['id'] = timeStamp
+    if(!this.state.isUpdate){
+      formBlogNew['id'] = timeStamp;
+    }
     let title = event.target.value
     this.setState({
       formBlog : formBlogNew
     })
   }
 
+  handleUpdate = (data) =>{
+    console.log(data)
+    this.setState({
+      formBlog : data,
+      isUpdate: true
+    })
+  }
+
   handleTambah= () =>{
-    this.postDataAPI()
+    if(this.state.isUpdate){
+       this.putDataToAPI()
+    }else{
+      this.postDataAPI()
+    }
   }
 
   componentDidMount(){
@@ -65,7 +107,7 @@ export default class Blog extends Component {
         <div className='flex flex-wrap justify-center'>
           {
             this.state.post.map(post => {
-              return <Post key={post.id} data={post} delete={this.handleDelete}/>
+              return <Post key={post.id} data={post} delete={this.handleDelete} update={this.handleUpdate} valueTitle={this.state.formBlog.title} valueBody={this.state.formBlog.body} changeInput={this.handleFormChange} tombolTambah={this.handleTambah} />
             })
           }
         </div>
